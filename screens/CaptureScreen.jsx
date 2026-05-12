@@ -4,6 +4,8 @@ import {PlusJakartaSans_600SemiBold} from '@expo-google-fonts/plus-jakarta-sans'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Octicons from '@expo/vector-icons/Octicons';
 import { LinearGradient } from 'expo-linear-gradient';
+import ScanCard from '../components/ScanCard';
+import { meals } from '../meals';
 
 export default function CaptureScreen() {
 
@@ -20,7 +22,7 @@ export default function CaptureScreen() {
     return (
      <View style={styles.mainContainer}>
         <View style={styles.headerContainer}>
-            <Image style={styles.logo} source={require('../images/screen.png')}></Image>
+            <Image style={styles.logo} source={require('../images/screen-removebg-preview.png')}></Image>
             <Text style={styles.title}>Foodflic</Text>
         </View>
 
@@ -55,7 +57,7 @@ export default function CaptureScreen() {
             </LinearGradient>
         </View>
 
-        <View style={styles.histoyContainer}>
+        <View style={styles.historyContainer}>
             <Text style={styles.recentsText}>Recent Scans</Text>
             <Text style={styles.mealsText}>Your meal history</Text>
         </View>
@@ -67,15 +69,19 @@ export default function CaptureScreen() {
                 <Text style={{alignSelf: 'flex-end', color: '#893500', fontFamily: 'BeVietnamPro_700Bold'}}>VIEW ALL</Text> 
             </Pressable>
         </View>
+        <FlatList
+        data={meals}
+        renderItem={({item}) => <ScanCard dishName={item.dishName} timeStamp={item.timeStamp} imgURL={item.imgURL}/>}
+        keyExtractor={item => item.id}
+        numColumns={1}
+        horizontal={true}/>
         </ScrollView>
      </View>
 
     )
 }
 
-/*gonna make orange gradeint buttons its own components, add button styling for when pressed */
-
-
+/*gonna make orange gradeint buttons its own component*/
 
 const styles = StyleSheet.create({
     mainContainer: {
@@ -128,7 +134,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#a1a1a1',
         width: 305,
-        backgroundColor: '#f0f1ef',
+        backgroundColor: '#e8e8e8',
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row',
@@ -174,8 +180,8 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     },
 
-    histoyContainer: {
-        marginTop: 20,
+    historyContainer: {
+        marginTop: 40,
         marginLeft: 20
     },
 
