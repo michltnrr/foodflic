@@ -4,7 +4,10 @@ import {PlusJakartaSans_600SemiBold} from '@expo-google-fonts/plus-jakarta-sans'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Octicons from '@expo/vector-icons/Octicons';
 import { LinearGradient } from 'expo-linear-gradient';
+
 import ScanCard from '../components/ScanCard';
+import Header from '../components/Header';
+import GradientButton, {GradientButtonText } from '../components/GradientButton';
 import { meals } from '../meals';
 
 export default function CaptureScreen() {
@@ -21,10 +24,7 @@ export default function CaptureScreen() {
 
     return (
      <View style={styles.mainContainer}>
-        <View style={styles.headerContainer}>
-            <Image style={styles.logo} source={require('../images/screen-removebg-preview.png')}></Image>
-            <Text style={styles.title}>Foodflic</Text>
-        </View>
+        <Header/>
 
         <ScrollView>
         <View style={styles.questionContainer}>
@@ -43,18 +43,13 @@ export default function CaptureScreen() {
                 </Text>
             </Pressable>
 
-            <LinearGradient colors={['#9c3e00', '#ff7a31']} style={styles.takePhotoButton}>
-            <Pressable style={({pressed}) => [
-                styles.buttonContent,
-                pressed && styles.takePhotoButtonPressed
-            ]}>
+            <GradientButton>
                 <Octicons name="sparkles-fill" size={40} color="white" />
-                <Text style={{fontFamily: 'BeVietnamPro_700Bold', color: 'white', fontSize: 20}}>
-                    ANALYZE DISH
-                </Text>
-            </Pressable>
 
-            </LinearGradient>
+                <GradientButtonText>
+                    ANALYZE DISH
+                </GradientButtonText>
+            </GradientButton>
         </View>
 
         <View style={styles.historyContainer}>
@@ -88,25 +83,6 @@ const styles = StyleSheet.create({
         flex:1,
     },
     
-    headerContainer: {
-    flexDirection: 'row',
-    // justifyContent: 'space-between',
-    marginLeft: 20
-    },
-
-    logo: {
-        width: 60,
-        height: 60,
-    },
-
-    title: {
-        fontFamily: 'Roboto',
-        fontWeight: 'bold',
-        fontSize: 25,
-        marginTop: 15,
-        color: '#893500'
-    },
-
     questionContainer: {
         marginTop: 20,
         marginLeft: 20
@@ -159,25 +135,6 @@ const styles = StyleSheet.create({
         marginBottom: 50,
         padding: 10,
         opacity: 0.5
-    },
-
-    takePhotoButton: {
-        borderRadius: 20,
-        width: 305,
-        overflow: 'hidden'
-    }, 
-   
-    takePhotoButtonPressed: {
-        opacity: 0.5
-    }, 
-
-    buttonContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    //gap prop adds equal spacing between items in a flex container (better than margins)
-    gap: 10,
-    paddingVertical: 14,
     },
 
     historyContainer: {
