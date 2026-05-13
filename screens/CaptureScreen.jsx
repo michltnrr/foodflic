@@ -9,9 +9,17 @@ import ScanCard from '../components/ScanCard';
 import Header from '../components/Header';
 import GradientButton, {GradientButtonText } from '../components/GradientButton';
 import { meals } from '../meals';
+import ServingSize from './ServingSize';
+import { useState } from 'react';
 
 export default function CaptureScreen() {
 
+    const [fakePic, setFakePic] = useState(false)
+
+    function handleFakePic() {
+        setFakePic(true)
+    }
+    
     const [fontsisLoaded] = useFonts({
         BeVietnamPro_700Bold,
         BeVietnamPro_700Bold_Italic,
@@ -21,6 +29,7 @@ export default function CaptureScreen() {
     if(!fontsisLoaded) {
         return null
     }
+
 
     return (
      <View style={styles.mainContainer}>
@@ -43,13 +52,15 @@ export default function CaptureScreen() {
                 </Text>
             </Pressable>
 
-            <GradientButton>
+            <GradientButton onPress={handleFakePic}>
                 <Octicons name="sparkles-fill" size={40} color="white" />
 
                 <GradientButtonText>
                     ANALYZE DISH
                 </GradientButtonText>
             </GradientButton>
+
+            {fakePic && <ServingSize showModal={fakePic}/>}
         </View>
 
         <View style={styles.historyContainer}>
@@ -75,8 +86,6 @@ export default function CaptureScreen() {
 
     )
 }
-
-/*gonna make orange gradeint buttons its own component*/
 
 const styles = StyleSheet.create({
     mainContainer: {
