@@ -7,16 +7,20 @@ import Feather from '@expo/vector-icons/Feather';
 import {useFonts,BeVietnamPro_700Bold, BeVietnamPro_700Bold_Italic} from '@expo-google-fonts/be-vietnam-pro';
 import {PlusJakartaSans_600SemiBold} from '@expo-google-fonts/plus-jakarta-sans'
 
-export default function ServingSize({showModal}) {
-    //the modalVisible needs to be on after user takes pic, need to lift up state for this
-    // const [modalVisble, setModalVisibile] = useState(false)
+export default function ServingSize({showModal, setShowModal}) {
+    //I NEED TO ADD A RETAKE PHOTO BUTTON SOMEHWERE
     const insets = useSafeAreaInsets()
     const [servings, setServing] = useState(1)
     
-    function handleServings() {
-        servings++
-        setServing(servings)
+    function handleServingsAdd(prev) {
+        setServing(prev => prev+1)
     }
+
+    function handleServingsMinus(prev) {
+        setServing(prev => prev > 1 ? prev -1: 1)
+    }
+
+    const servingText = servings > 1 ? 'SERVINGS' : 'SERVING'
 
     return (
         <Modal
@@ -29,6 +33,7 @@ export default function ServingSize({showModal}) {
                     <Pressable style={({ pressed }) => ({
                         opacity: pressed ? 0.5 : 1,
                     })}
+                    onPress={() => setShowModal(false)}
                     >
                         <Feather name="x" size={30} color="#893500" />
                     </Pressable>
@@ -58,18 +63,40 @@ export default function ServingSize({showModal}) {
                         </View>
                 </View>
 
-                <View>
-                        <Text>Serving Size</Text>
-                        <Text>Adjust the quantity to determine the perfect portion based video length to pair with your meal</Text>
-                        <View>
-                            <Pressable>
-                                <Feather name="minus" size={24} color="black" />
+                <View style={styles.quantityContainer}>
+                        <Text style={{fontFamily: 'BeVietnamPro_700Bold', fontSize: 15, marginBottom: 10, paddingTop: 12}}>Serving Size</Text>
+                        <Text style={{fontFamily: 'PlusJakartaSans_600SemiBold', fontSize: 12, color: '#9b9a9a', textAlign: 'center'}}>Adjust the quantity to determine the perfect portion based video length to pair with your meal</Text>
+                        <View style={styles.quantityBtnsContainer}>
+                            <Pressable style={({pressed}) => (
+                                [styles.quantityBtns, {
+                                    opacity: pressed ? 0.5 : 1
+                                }]
+                            )}
+                            onPress={() => handleServingsMinus(servings)}>
+                                <Feather name="minus" size={24} color="#893500" />
                             </Pressable>
-                            <Text>{servings}</Text>
-                            <Pressable>
-                                <Feather name="plus" size={24} color="black" />
+                            <Text style={{color: '#893500', fontFamily: 'PlusJakartaSans_600SemiBold', fontSize: 45}}>{servings}</Text>
+                            <Pressable style={({pressed}) => (
+                                [styles.quantityBtns, {
+                                    opacity: pressed ? 0.5: 1
+                                }]
+                            )}
+                            onPress={() => handleServingsAdd(servings)}>
+                                <Feather name="plus" size={24} color="#893500" />
                             </Pressable>
                         </View>
+                        <View style={styles.servingsTextContainer}>
+                            <Text style={{fontFamily: 'BeVietnamPro_700Bold', fontSize: 12, color: '#767676'}}>{servingText}</Text>
+                        </View>
+                </View>
+
+                <View style={styles.videosBtn}>
+                    <GradientButton>
+                        <GradientButtonText>
+                            Find Matching Videos
+                        </GradientButtonText>
+                        <Feather name="arrow-right" size={24} color="white" />
+                    </GradientButton>
                 </View>
             </ScrollView>
             </View>
@@ -133,4 +160,38 @@ const styles = StyleSheet.create({
         paddingHorizontal: 12,
         backgroundColor: 'rgba(255, 255, 255, 0.6)'
     },
+
+    quantityContainer: {
+        marginTop: 25,
+        borderRadius: 25,
+        backgroundColor: '#e4e4e4',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginHorizontal: 15
+    },
+
+    quantityBtnsContainer: {
+        flexDirection: 'row',
+        gap: 50,
+        marginTop: 15
+    },
+
+    servingsTextContainer: {
+        paddingBottom: 15
+    },
+
+    quantityBtns: {
+        backgroundColor: 'white',
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+
+    videosBtn: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 30
+    }
 })

@@ -10,24 +10,35 @@ import Header from '../components/Header';
 import GradientButton, {GradientButtonText } from '../components/GradientButton';
 import { meals } from '../meals';
 import ServingSize from './ServingSize';
+import HistoryScreen from './HistoryScreen';
 import { useState } from 'react';
 
 export default function CaptureScreen() {
 
     const [fakePic, setFakePic] = useState(false)
+    const [showHistory, setShowHistory] = useState(false)
 
     function handleFakePic() {
         setFakePic(true)
     }
+
     
     const [fontsisLoaded] = useFonts({
         BeVietnamPro_700Bold,
         BeVietnamPro_700Bold_Italic,
         PlusJakartaSans_600SemiBold
     })
-
+    
     if(!fontsisLoaded) {
         return null
+    }
+    
+    function handleHistory() {
+        setShowHistory(true)
+    }
+    
+    if(showHistory) {
+        return <HistoryScreen setShowHistory={setShowHistory}/>
     }
 
 
@@ -60,7 +71,7 @@ export default function CaptureScreen() {
                 </GradientButtonText>
             </GradientButton>
 
-            {fakePic && <ServingSize showModal={fakePic}/>}
+            {fakePic && <ServingSize showModal={fakePic} setShowModal={setFakePic}/>}
         </View>
 
         <View style={styles.historyContainer}>
@@ -71,7 +82,8 @@ export default function CaptureScreen() {
         <View style={styles.allmealsContainer}>
             <Pressable style={({pressed}) => ({
                 opacity: pressed ? 0.5 : 1
-            })}>
+            })}
+            onPress={handleHistory}>
                 <Text style={{alignSelf: 'flex-end', color: '#893500', fontFamily: 'BeVietnamPro_700Bold'}}>VIEW ALL</Text> 
             </Pressable>
         </View>
