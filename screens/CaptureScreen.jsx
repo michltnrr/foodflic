@@ -1,4 +1,4 @@
-import {View, Pressable, Text, Image, ScrollView, FlatList, StyleSheet} from 'react-native'
+import {View, Pressable, Button, Text, Image, ScrollView, FlatList, Alert, StyleSheet} from 'react-native'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Octicons from '@expo/vector-icons/Octicons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -9,17 +9,22 @@ import GradientButton, {GradientButtonText } from '../components/GradientButton'
 import { meals } from '../meals';
 import ServingSize from './ServingSize';
 import HistoryScreen from './HistoryScreen';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 import * as ImagePicker from 'expo-image-picker'
-import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
+import { CameraView, CameraType, CameraMode, useCameraPermissions } from 'expo-camera';
+import { PlusJakartaSans_600SemiBold } from '@expo-google-fonts/plus-jakarta-sans';
 
 export default function CaptureScreen() {
     const [imageSelected, setImageSelected] = useState(false)
     const [image, setImage] = useState(null)
 
+    const [permission, requestPermisson] = useCameraPermissions()
+    const ref = useRef(null)
+    const [photoUri, setPhotoUri] = useState(null)
+    const [camMode, setCamMode] = useState("picture")
     const [facing, setFacing] = useState('back')
-    const [permssion, requestPermisson] = useCameraPermissions()
+    const [displayCam, setDisplayCam] = useState(false)
 
     const [showHistory, setShowHistory] = useState(false)
 
@@ -41,16 +46,64 @@ export default function CaptureScreen() {
     
         if(!result.canceled) {
             setImage(result.assets[0].uri)
+            setImageSelected(true)
         }
-        setImageSelected(true)
     }
 
-    if(!permssion) {
-        return <View/>
+    //camera permissions
+    if(!permission) {
+        return null
     }
 
-    if(!permssion.granted) {
-        Alert.alert('Permisson required.', 'Permison to access the camera is required.')
+    if(!permission.granted) {
+        return (
+            <View>
+                <Text>Permission is required to enable camera use</Text>
+                <Button onPress={requestPermisson} title='Grant Permisson'></Button>
+            </View>
+        )
+    }
+
+    async function takePhoto() {
+        const photo = await ref.current?.takePictureAsync()
+        if(photo?.uri) {
+            setPhotoUri(photo.uri)
+            setImage(photo.uri)
+            setImageSelected(true)
+            setDisplayCam(false)
+        }
+
+        console.log('Photo taken')
+    }
+
+    if(displayCam) {
+        return (
+            <View style={styles.cameraScreen}>
+                
+            <CameraView
+                ref={ref}
+                style={StyleSheet.absoluteFillObject}
+                facing={facing}
+                mode={camMode}
+                />
+
+                <Pressable 
+                onPress={() => setDisplayCam(false)}
+                style={({pressed}) => [
+                    styles.closeBtn,
+                    {opacity: pressed ? 0.5: 1}]}
+                >
+                    <Text style={{fontFamily: 'PlusJakartaSans_600SemiBold', color: 'black', fontSize: 13}}>Close</Text>
+                </Pressable>
+
+            <View style={styles.pictureBtnContainer}>
+            <Pressable onPress={takePhoto}
+            style={({pressed}) => [styles.pictureBtn, {
+                opacity: pressed? 0.5 :1
+            }]}/>
+            </View>      
+        </View>
+        )
     }
     
     function handleHistory() {
@@ -60,7 +113,6 @@ export default function CaptureScreen() {
     if(showHistory) {
         return <HistoryScreen setShowHistory={setShowHistory}/>
     }
-
 
     return (
      <View style={styles.mainContainer}>
@@ -86,7 +138,7 @@ export default function CaptureScreen() {
             </Pressable>
             {imageSelected && <ServingSize showModal={imageSelected} setShowModal={setImageSelected} imgSource={image}/>}
 
-            <GradientButton>
+            <GradientButton onPress={() => setDisplayCam(true)}>
                 <Octicons name="sparkles-fill" size={40} color="white" />
 
                 <GradientButtonText>
@@ -201,5 +253,41 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         marginTop: 8,
         marginRight: 12
+    },
+
+    cameraScreen: {
+        flex: 1,
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: 'black',
+        zIndex: 999,
+        elevation: 999
+    },
+
+    closeBtn: {
+        position: 'absolute',
+        top: 60,
+        left: 20,
+        backgroundColor: 'rgba(237, 237, 237, 0.9)',
+        paddingHorizontal: 14,
+        paddingVertical: 8,
+        borderRadius: 12,
+    },
+
+    pictureBtn: {
+        height: 85,
+        width: 85,
+        borderRadius: 999,
+        backgroundColor: 'white',
+        borderColor: '#ff7a31',
+        borderWidth: 4
+    },
+
+    pictureBtnContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        bottom: 50,
+        width: '100%'
+
     }
 })

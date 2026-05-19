@@ -55,7 +55,6 @@
          "expo-camera",
         {
           "cameraPermission": "Allow Foodflic to access your camera",
-          "microphonePermission": "Allow Foodflic to access your microphone"
         }
        ]
     ]
