@@ -11,26 +11,47 @@ import ServingSize from './ServingSize';
 import HistoryScreen from './HistoryScreen';
 import { useState } from 'react';
 
-export default function CaptureScreen() {
+import * as ImagePicker from 'expo-image-picker'
+import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
 
-    const [fakePic, setFakePic] = useState(false)
+export default function CaptureScreen() {
+    const [imageSelected, setImageSelected] = useState(false)
+    const [image, setImage] = useState(null)
+
+    const [facing, setFacing] = useState('back')
+    const [permssion, requestPermisson] = useCameraPermissions()
+
     const [showHistory, setShowHistory] = useState(false)
 
-    function handleFakePic() {
-        setFakePic(true)
+    async function pickImage() {
+        const permissonResult = await ImagePicker.requestMediaLibraryPermissionsAsync()
+
+        if(!permissonResult.granted) {
+            Alert.alert('Permission required.', 'Permisson to access the media library is required.')
+            return
+        }
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ['images'],
+            allowsEditing: true,
+            aspect: [4, 5],
+            quality:1
+        })
+    
+        console.log(result)
+    
+        if(!result.canceled) {
+            setImage(result.assets[0].uri)
+        }
+        setImageSelected(true)
     }
 
-    
-    // const [fontsisLoaded] = useFonts({
-    //     BeVietnamPro_700Bold,
-    //     BeVietnamPro_700Bold_Italic,
-    //     BeVietnamPro_400Regular,
-    //     PlusJakartaSans_600SemiBold
-    // })
-    
-    // if(!fontsisLoaded) {
-    //     return null
-    // }
+    if(!permssion) {
+        return <View/>
+    }
+
+    if(!permssion.granted) {
+        Alert.alert('Permisson required.', 'Permison to access the camera is required.')
+    }
     
     function handleHistory() {
         setShowHistory(true)
@@ -55,14 +76,17 @@ export default function CaptureScreen() {
         <View style={styles.imageButtons}>
             <Pressable style={({pressed}) => [
                 styles.uploadButton, 
-                pressed && styles.uploadButtonPressed]}>
+                pressed && styles.uploadButtonPressed]}
+                onPress={pickImage}
+                >
                 <MaterialIcons name="upload-file" size={40} color="#893500" />
                 <Text style={{fontFamily: 'BeVietnamPro_700Bold', fontSize: 20}}>
                     Upload from gallery
                 </Text>
             </Pressable>
+            {imageSelected && <ServingSize showModal={imageSelected} setShowModal={setImageSelected} imgSource={image}/>}
 
-            <GradientButton onPress={handleFakePic}>
+            <GradientButton>
                 <Octicons name="sparkles-fill" size={40} color="white" />
 
                 <GradientButtonText>
@@ -70,7 +94,6 @@ export default function CaptureScreen() {
                 </GradientButtonText>
             </GradientButton>
 
-            {fakePic && <ServingSize showModal={fakePic} setShowModal={setFakePic}/>}
         </View>
 
         <View style={styles.historyContainer}>

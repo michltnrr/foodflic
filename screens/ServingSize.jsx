@@ -5,7 +5,7 @@ import GradientButton, {GradientButtonText} from "../components/GradientButton"
 import { useState } from "react"
 import Feather from '@expo/vector-icons/Feather';
 
-export default function ServingSize({showModal, setShowModal}) {
+export default function ServingSize({showModal, setShowModal, imgSource}) {
     //I NEED TO ADD A RETAKE PHOTO BUTTON SOMEHWERE
     const insets = useSafeAreaInsets()
     const [servings, setServing] = useState(1)
@@ -43,7 +43,7 @@ export default function ServingSize({showModal, setShowModal}) {
                 <ScrollView>
                 <View style={styles.foodPicContainer}>
                         <Image 
-                        source={require('../images/IMG_2047.png')}
+                        source={{uri: imgSource}}
                         style={styles.foodPic}
                         />
 
