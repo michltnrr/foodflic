@@ -1,6 +1,4 @@
 import {View, Pressable, Text, Image, ScrollView, FlatList, StyleSheet} from 'react-native'
-import {useFonts,BeVietnamPro_700Bold, BeVietnamPro_700Bold_Italic} from '@expo-google-fonts/be-vietnam-pro';
-import {PlusJakartaSans_600SemiBold} from '@expo-google-fonts/plus-jakarta-sans'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Octicons from '@expo/vector-icons/Octicons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -23,15 +21,16 @@ export default function CaptureScreen() {
     }
 
     
-    const [fontsisLoaded] = useFonts({
-        BeVietnamPro_700Bold,
-        BeVietnamPro_700Bold_Italic,
-        PlusJakartaSans_600SemiBold
-    })
+    // const [fontsisLoaded] = useFonts({
+    //     BeVietnamPro_700Bold,
+    //     BeVietnamPro_700Bold_Italic,
+    //     BeVietnamPro_400Regular,
+    //     PlusJakartaSans_600SemiBold
+    // })
     
-    if(!fontsisLoaded) {
-        return null
-    }
+    // if(!fontsisLoaded) {
+    //     return null
+    // }
     
     function handleHistory() {
         setShowHistory(true)

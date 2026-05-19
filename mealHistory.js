@@ -5,8 +5,8 @@ export const mealHistory = [
         channel: 'AnyButton2Start',
         views: '181K',
         duration: '21 min',
-        foodPic: require('../images/IMG_2047.png'),
-        thumbnail: require('../images/dummythumbnails/jojofashion.avif')
+        foodPic: require('./images/IMG_2047.png'),
+        thumbnail: require('./images/dummythumbnails/jojofashion.avif')
     }, 
     
     {
@@ -15,8 +15,8 @@ export const mealHistory = [
         channel: 'Perfect Scarecrow (plastekpet)',
         views: '1.2M views',
         duration: '56 sec',
-        foodPic: require('../images/IMG_0676.png'),
-        thumbnail: require('../images/dummythumbnails/plastek.avif')
+        foodPic: require('./images/IMG_0676.png'),
+        thumbnail: require('./images/dummythumbnails/plastek.avif')
     }, 
     
     
@@ -26,8 +26,8 @@ export const mealHistory = [
         channel: 'The Media Knights',
         views: '230K views',
         duration: '19 min',
-        foodPic: require('../images/IMG_0098.png'),
-        thumbnail: require('../images/dummythumbnails/spideybndreact.avif')
+        foodPic: require('./images/IMG_0098.png'),
+        thumbnail: require('./images/dummythumbnails/spideybndreact.avif')
     },
     
     {
@@ -36,8 +36,8 @@ export const mealHistory = [
         channel: 'Young Dabo Live',
         views: '94k views',
         duration: '27min',     
-        foodPic: require('../images/IMG_2873.png'),
-        thumbnail: require('../images/dummythumbnails/daboerry.avif')
+        foodPic: require('./images/IMG_2873.png'),
+        thumbnail: require('./images/dummythumbnails/daboerry.avif')
     },
     
     {
@@ -46,8 +46,8 @@ export const mealHistory = [
         channel: 'BIBLE DUDE',
         views: '893k views',
         duration: '43 min',
-        foodPic: require('../images/IMG_2062.png'),
-        thumbnail: require('../images/dummythumbnails/lucifersfall.avif')
+        foodPic: require('./images/IMG_2062.png'),
+        thumbnail: require('./images/dummythumbnails/lucifersfall.avif')
     },
     
     {
@@ -56,8 +56,8 @@ export const mealHistory = [
         channel: 'ufcespanol',
         views: '15M views',
         duration: '16 min',
-        foodPic: require('../images/IMG_3897.png'),
-        thumbnail: require('../images/dummythumbnails/illiaufc.avif')
+        foodPic: require('./images/IMG_3897.png'),
+        thumbnail: require('./images/dummythumbnails/illiaufc.avif')
     },
     
     {
@@ -66,7 +66,7 @@ export const mealHistory = [
         channel: 'Cinematic Cookie',
         views: '11k views',
         duration: '7 min',
-        foodPic: require('../images/IMG_2341.png'),
-        thumbnail: require('../images/dummythumbnails/blenderfilm.avif')
+        foodPic: require('./images/IMG_2341.png'),
+        thumbnail: require('./images/dummythumbnails/blenderfilm.avif')
     }
 ]

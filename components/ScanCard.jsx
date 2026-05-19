@@ -1,6 +1,4 @@
 import {Image, Text, View, Pressable, StyleSheet} from "react-native"
-import {useFonts,BeVietnamPro_700Bold, BeVietnamPro_700Bold_Italic} from '@expo-google-fonts/be-vietnam-pro';
-import {PlusJakartaSans_600SemiBold} from '@expo-google-fonts/plus-jakarta-sans'
 
 export default function ScanCard({dishName, timeStamp, imgURL}) {
     return (
@@ -9,7 +7,7 @@ export default function ScanCard({dishName, timeStamp, imgURL}) {
                 <Image 
                 style={styles.foodPhoto}
                 source={imgURL}></Image>
-                <Text style={styles.dishName}>{dishName}</Text>
+                <Text numberOfLines={1} style={styles.dishName}>{dishName}</Text>
                 <Text style={styles.timeStamp}>{timeStamp}</Text>
             </View>
         </Pressable>

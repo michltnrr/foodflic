@@ -1,12 +1,8 @@
 import {Text, View, ScrollView, FlatList, StyleSheet, Pressable} from "react-native"
 import Header from "../components/Header"
-import {useFonts,BeVietnamPro_700Bold, BeVietnamPro_700Bold_Italic} from '@expo-google-fonts/be-vietnam-pro';
-import {PlusJakartaSans_600SemiBold} from '@expo-google-fonts/plus-jakarta-sans'
-import { mealHistory } from "../components/mealHistory";
+import { mealHistory } from "../mealHistory";
 import HistoryCard from "../components/HistoryCard";
 import Ionicons from '@expo/vector-icons/Ionicons';
-
-
 
 export default function HistoryScreen({setShowHistory}) {
     return (

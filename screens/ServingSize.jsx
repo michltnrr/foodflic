@@ -4,8 +4,6 @@ import { BlurView } from "expo-blur"
 import GradientButton, {GradientButtonText} from "../components/GradientButton"
 import { useState } from "react"
 import Feather from '@expo/vector-icons/Feather';
-import {useFonts,BeVietnamPro_700Bold, BeVietnamPro_700Bold_Italic} from '@expo-google-fonts/be-vietnam-pro';
-import {PlusJakartaSans_600SemiBold} from '@expo-google-fonts/plus-jakarta-sans'
 
 export default function ServingSize({showModal, setShowModal}) {
     //I NEED TO ADD A RETAKE PHOTO BUTTON SOMEHWERE

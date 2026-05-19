@@ -1,5 +1,4 @@
 import {Text, Pressable, StyleSheet} from "react-native"
-import {useFonts,BeVietnamPro_700Bold, BeVietnamPro_700Bold_Italic} from '@expo-google-fonts/be-vietnam-pro';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function GradientButton({children, width = 305, onPress}) {

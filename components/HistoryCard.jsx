@@ -1,7 +1,5 @@
 import {View, Text, Image, StyleSheet} from "react-native"
 import GradientButton, {GradientButtonText} from "./GradientButton";
-import {useFonts,BeVietnamPro_700Bold, BeVietnamPro_700Bold_Italic} from '@expo-google-fonts/be-vietnam-pro';
-import {PlusJakartaSans_600SemiBold} from '@expo-google-fonts/plus-jakarta-sans'
 import Entypo from '@expo/vector-icons/Entypo';
 
 export default function HistoryCard({title, channel, views, duration, foodPic, thumbnail}) {
