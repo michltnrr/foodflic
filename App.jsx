@@ -5,6 +5,8 @@ import CaptureScreen from './screens/CaptureScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import {useFonts,BeVietnamPro_700Bold, BeVietnamPro_700Bold_Italic, BeVietnamPro_400Regular} from '@expo-google-fonts/be-vietnam-pro';
 import {PlusJakartaSans_600SemiBold} from '@expo-google-fonts/plus-jakarta-sans'
+import { NavigationContainer } from '@react-navigation/native';
+import BottomTabs from './navigation/BottomTabs';
 
 export default function App() {
   const [fontsisLoaded] = useFonts({
@@ -21,9 +23,10 @@ export default function App() {
     return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
-          <CaptureScreen/>
-          {/* <SettingsScreen/> */}
-          <StatusBar style="black" />
+        <NavigationContainer>
+        <StatusBar style="black" />
+          <BottomTabs/>
+        </NavigationContainer>
       </SafeAreaView>
     </SafeAreaProvider>
   );

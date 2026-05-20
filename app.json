@@ -54,7 +54,7 @@
        [
          "expo-camera",
         {
-          "cameraPermission": "Allow Foodflic to access your camera",
+          "cameraPermission": "Allow Foodflic to access your camera"
         }
        ]
     ]

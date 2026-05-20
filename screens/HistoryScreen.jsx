@@ -1,10 +1,10 @@
-import {Text, View, ScrollView, FlatList, StyleSheet, Pressable} from "react-native"
+import {Text, View, ScrollView, FlatList, StyleSheet} from "react-native"
 import Header from "../components/Header"
 import { mealHistory } from "../mealHistory";
 import HistoryCard from "../components/HistoryCard";
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-export default function HistoryScreen({setShowHistory}) {
+export default function HistoryScreen() {
     return (
       <View style={styles.mainContainer}>
         <Header/>
@@ -12,20 +12,6 @@ export default function HistoryScreen({setShowHistory}) {
             <View style={{margin: 12}}>
                 <Text style={{fontFamily: 'BeVietnamPro_700Bold', fontSize: 35}}>History</Text>
                 <Text style={{fontFamily: 'PlusJakartaSans_600SemiBold', color: '#767676', fontSize: 15}}>Relive your meals as visual memories.</Text>
-                <Pressable style={({pressed}) => [
-                    {
-                        flexDirection: 'row',
-                        opacity: pressed ? 0.5 : 1,
-                        backgroundColor: '#ca5106',
-                        width: 80,
-                        borderRadius: 25,
-                        marginTop: 18
-                    }
-                ]}
-                onPress={() => setShowHistory(false)}>
-                <Ionicons name="arrow-back" size={24} color="white" />
-                <Text style={{color: 'white', fontSize: 18}}>Back</Text>
-                </Pressable>
             </View>
 
 

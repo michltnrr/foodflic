@@ -10,6 +10,7 @@ import { meals } from '../meals';
 import ServingSize from './ServingSize';
 import HistoryScreen from './HistoryScreen';
 import { useState, useRef } from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 import * as ImagePicker from 'expo-image-picker'
 import { CameraView, CameraType, CameraMode, useCameraPermissions } from 'expo-camera';
@@ -26,7 +27,7 @@ export default function CaptureScreen() {
     const [facing, setFacing] = useState('back')
     const [displayCam, setDisplayCam] = useState(false)
 
-    const [showHistory, setShowHistory] = useState(false)
+    const navigation = useNavigation()
 
     async function pickImage() {
         const permissonResult = await ImagePicker.requestMediaLibraryPermissionsAsync()
@@ -50,7 +51,7 @@ export default function CaptureScreen() {
         }
     }
 
-    //camera permissions
+    //CAMERA PERMISSONS
     if(!permission) {
         return null
     }
@@ -105,14 +106,6 @@ export default function CaptureScreen() {
         </View>
         )
     }
-    
-    function handleHistory() {
-        setShowHistory(true)
-    }
-    
-    if(showHistory) {
-        return <HistoryScreen setShowHistory={setShowHistory}/>
-    }
 
     return (
      <View style={styles.mainContainer}>
@@ -157,7 +150,7 @@ export default function CaptureScreen() {
             <Pressable style={({pressed}) => ({
                 opacity: pressed ? 0.5 : 1
             })}
-            onPress={handleHistory}>
+            onPress={() => navigation.navigate('History')}>
                 <Text style={{alignSelf: 'flex-end', color: '#893500', fontFamily: 'BeVietnamPro_700Bold'}}>VIEW ALL</Text> 
             </Pressable>
         </View>
