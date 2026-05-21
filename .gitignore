@@ -42,3 +42,6 @@ yarn-error.*
 
 # api keys
 .env
+
+#other
+/utils
