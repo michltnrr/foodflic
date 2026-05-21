@@ -9,11 +9,10 @@ export default function HistoryScreen() {
       <View style={styles.mainContainer}>
         <Header/>
 
-            <View style={{margin: 12}}>
+            <View style={{margin: 14}}>
                 <Text style={{fontFamily: 'BeVietnamPro_700Bold', fontSize: 35}}>History</Text>
                 <Text style={{fontFamily: 'PlusJakartaSans_600SemiBold', color: '#767676', fontSize: 15}}>Relive your meals as visual memories.</Text>
             </View>
-
 
             <FlatList
             data={mealHistory}
@@ -26,7 +25,6 @@ export default function HistoryScreen() {
             thumbnail={item.thumbnail}/>}
             keyExtractor={(item)=> item.id.toString()}
             />
-
       </View>
     )
 }

@@ -10,8 +10,11 @@ const Tab = createBottomTabNavigator()
 
 export default function BottomTabs() {
     return (
-        <Tab.Navigator screenOptions={
+        <Tab.Navigator
+        detachInactiveScreens={false} 
+        screenOptions={
             {headerShown: false,
+            lazy: false,
              animation: 'shift',
              tabBarStyle: {
                 bottom: 10,
@@ -26,13 +29,13 @@ export default function BottomTabs() {
                 backgroundColor: '#f4f2f2'
              }
 
-            }}>
+            }
+            }>
             <Tab.Screen name="Capture" component={CaptureScreen}
             options={{
                 tabBarIcon: ({focused}) => (
                     <Entypo name="camera" size={24} color={focused ? '#893500' : 'gray'} />
                 ),
-
                 tabBarLabelStyle: {fontSize: 14},
                 tabBarActiveTintColor: '#893500',
                 tabBarInactiveTintColor: 'gray'
