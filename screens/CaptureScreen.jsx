@@ -23,6 +23,9 @@ export default function CaptureScreen() {
     const [permission, requestPermisson] = useCameraPermissions()
     const ref = useRef(null)
     const [photoUri, setPhotoUri] = useState(null)
+    const [photoBase64, setPhotoBase64] = useState(null)
+
+
     const [camMode, setCamMode] = useState("picture")
     const [facing, setFacing] = useState('back')
     const [displayCam, setDisplayCam] = useState(false)
@@ -40,13 +43,15 @@ export default function CaptureScreen() {
             mediaTypes: ['images'],
             allowsEditing: true,
             aspect: [4, 5],
+            base64: true,
             quality:1
         })
     
-        console.log(result)
+        console.log('Image picker launched sucessfully')
     
         if(!result.canceled) {
             setImage(result.assets[0].uri)
+            setPhotoBase64(result.assets[0].base64)
             setImageSelected(true)
         }
     }
@@ -66,9 +71,12 @@ export default function CaptureScreen() {
     }
 
     async function takePhoto() {
-        const photo = await ref.current?.takePictureAsync()
+        const photo = await ref.current?.takePictureAsync({
+            base64: true,
+        })
         if(photo?.uri) {
             setPhotoUri(photo.uri)
+            setPhotoBase64(photo.base64)
             setImage(photo.uri)
             setImageSelected(true)
             setDisplayCam(false)
@@ -129,7 +137,7 @@ export default function CaptureScreen() {
                     Upload from gallery
                 </Text>
             </Pressable>
-            {imageSelected && <ServingSize showModal={imageSelected} setShowModal={setImageSelected} imgSource={image}/>}
+            {imageSelected && <ServingSize showModal={imageSelected} setShowModal={setImageSelected} imgSource={image} imgBase64={photoBase64}/>}
 
             <GradientButton onPress={() => setDisplayCam(true)}>
                 <Octicons name="sparkles-fill" size={40} color="white" />

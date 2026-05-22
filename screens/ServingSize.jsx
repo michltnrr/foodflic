@@ -4,8 +4,9 @@ import { BlurView } from "expo-blur"
 import GradientButton, {GradientButtonText} from "../components/GradientButton"
 import { useState } from "react"
 import Feather from '@expo/vector-icons/Feather';
+import { createQueries } from "../utils/main"
 
-export default function ServingSize({showModal, setShowModal, imgSource}) {
+export default function ServingSize({showModal, setShowModal, imgSource, imgBase64}) {
     //I NEED TO ADD A RETAKE PHOTO BUTTON SOMEHWERE
     const insets = useSafeAreaInsets()
     const [servings, setServing] = useState(1)
@@ -89,7 +90,7 @@ export default function ServingSize({showModal, setShowModal, imgSource}) {
                 </View>
 
                 <View style={styles.videosBtn}>
-                    <GradientButton>
+                    <GradientButton onPress={() => createQueries(`data:image/jepg;base64,${imgBase64}`)}>
                         <GradientButtonText>
                             Find Matching Videos
                         </GradientButtonText>
