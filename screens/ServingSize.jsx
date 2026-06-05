@@ -1,15 +1,16 @@
-import {Text, View, Pressable, Modal, Image, ScrollView, StyleSheet} from "react-native"
+import {Text, View, Pressable, Modal, Image, ScrollView, ActivityIndicator, StyleSheet} from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { BlurView } from "expo-blur"
 import GradientButton, {GradientButtonText} from "../components/GradientButton"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Feather from '@expo/vector-icons/Feather';
-import { createQueries } from "../utils/main"
+import { createQueries, getVideos } from "../utils/main"
 
 export default function ServingSize({showModal, setShowModal, imgSource, imgBase64}) {
     //I NEED TO ADD A RETAKE PHOTO BUTTON SOMEHWERE
     const insets = useSafeAreaInsets()
     const [servings, setServing] = useState(1)
+    const [mealData, setMealData] = useState(null)
     
     function handleServingsAdd(prev) {
         setServing(prev => prev+1)
@@ -20,6 +21,18 @@ export default function ServingSize({showModal, setShowModal, imgSource, imgBase
     }
 
     const servingText = servings > 1 ? 'SERVINGS' : 'SERVING'
+
+    useEffect(() => {
+        async function analyzeDish() {
+            const result = await createQueries(`data:image/jpeg;base64,${imgBase64}`, servings)
+
+            if(result) {
+                setMealData(result)
+            }
+        }
+
+        analyzeDish()
+    }, [])
 
     return (
         <Modal
@@ -55,7 +68,7 @@ export default function ServingSize({showModal, setShowModal, imgSource, imgBase
                             </View>
                             <View>
                                 <Text style={{fontFamily: 'PlusJakartaSans_600SemiBold', color:'#767676', fontSize: 13}}>CAPTURE SUCCESSFUL</Text>
-                                <Text style={{fontFamily: 'BeVietnamPro_700Bold', fontSize: 12}}>General Tso's Chicken</Text>
+                                <Text style={{fontFamily: 'BeVietnamPro_700Bold', fontSize: 12}}>{mealData?.dishName || 'Analyzing Dish...'}</Text>
                             </View>
                         </BlurView>
 
@@ -90,12 +103,15 @@ export default function ServingSize({showModal, setShowModal, imgSource, imgBase
                 </View>
 
                 <View style={styles.videosBtn}>
-                    <GradientButton onPress={() => createQueries(`data:image/jepg;base64,${imgBase64}`)}>
+                    {mealData ? (
+                    <GradientButton onPress={() => getVideos(mealData)}>
                         <GradientButtonText>
                             Find Matching Videos
                         </GradientButtonText>
                         <Feather name="arrow-right" size={24} color="white" />
                     </GradientButton>
+
+                    ) : <ActivityIndicator size='large' color='#893500'/> }
                 </View>
             </ScrollView>
             </View>
