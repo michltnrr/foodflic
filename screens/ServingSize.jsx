@@ -4,7 +4,8 @@ import { BlurView } from "expo-blur"
 import GradientButton, {GradientButtonText} from "../components/GradientButton"
 import { useState, useEffect } from "react"
 import Feather from '@expo/vector-icons/Feather';
-import { createQueries, getVideos } from "../utils/main"
+import { createQueries, getVideos } from "../utils/main.js"
+import { uploadImage } from "../utils/uploadStorage.js"
 
 export default function ServingSize({showModal, setShowModal, imgSource, imgBase64}) {
     //I NEED TO ADD A RETAKE PHOTO BUTTON SOMEHWERE
@@ -23,16 +24,32 @@ export default function ServingSize({showModal, setShowModal, imgSource, imgBase
     const servingText = servings > 1 ? 'SERVINGS' : 'SERVING'
 
     useEffect(() => {
-        async function analyzeDish() {
+        const timeout = setTimeout(async () => {
             const result = await createQueries(`data:image/jpeg;base64,${imgBase64}`, servings)
 
             if(result) {
                 setMealData(result)
             }
-        }
+        }, 500)
+        
+        return () => clearTimeout(timeout)
 
-        analyzeDish()
-    }, [])
+    }, [servings])
+
+    async function createMeal() {
+        if(!mealData) return 
+        
+        try {
+            const imageUrl = await uploadImage(imgSource)
+
+            await getVideos(result)
+            //save to db
+
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
 
     return (
         <Modal

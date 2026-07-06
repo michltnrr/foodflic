@@ -8,6 +8,9 @@ import {PlusJakartaSans_600SemiBold} from '@expo-google-fonts/plus-jakarta-sans'
 import { NavigationContainer } from '@react-navigation/native';
 import BottomTabs from './navigation/BottomTabs';
 
+import { supabase } from './utils/supabase';
+import { useEffect } from 'react';
+
 export default function App() {
   const [fontsisLoaded] = useFonts({
         BeVietnamPro_700Bold,
@@ -16,10 +19,26 @@ export default function App() {
         PlusJakartaSans_600SemiBold
     })
     
+    useEffect(() => {
+      const getUsers = async () => {
+        const {data, error} = await supabase
+        .from('users')
+        .select() 
+  
+        if(error) {
+            console.error(error)
+            return
+        }
+        console.log(data)
+
+      }
+      getUsers()
+    }, [])
     if(!fontsisLoaded) {
         return null
     }
   
+    
     return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
