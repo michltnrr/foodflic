@@ -6,6 +6,7 @@ import { useState, useEffect } from "react"
 import Feather from '@expo/vector-icons/Feather';
 import { createQueries, getVideos } from "../utils/main.js"
 import { uploadImage } from "../utils/uploadStorage.js"
+import { supabase } from "../utils/supabase.js"
 
 export default function ServingSize({showModal, setShowModal, imgSource, imgBase64}) {
     //I NEED TO ADD A RETAKE PHOTO BUTTON SOMEHWERE
@@ -42,8 +43,20 @@ export default function ServingSize({showModal, setShowModal, imgSource, imgBase
         try {
             const imageUrl = await uploadImage(imgSource)
 
-            await getVideos(result)
+            const videoMealData = await getVideos(result)
             //save to db
+            const {error} = await supabase
+            .from('meals')
+            .insert({
+                food_image_path: imageUrl,
+                dish_name: videoMealData.dish,
+                video_id: videoMealData.id,
+                video_title: videoMealData.snippet.title,
+                channel_name: videoMealData.channelTitle,
+                view_count: videoMealData.statistics.viewCount,
+                video_duration: videoMealData.contentDetails.duration,
+                thumbnail_url: videoMealData.thumbnails.deafult.url
+            })
 
         } catch(err) {
             console.log(err)
