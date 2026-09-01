@@ -7,6 +7,7 @@ import Feather from '@expo/vector-icons/Feather';
 import { createQueries, getVideos } from "../utils/main.js"
 import { uploadImage } from "../utils/uploadStorage.js"
 import { supabase } from "../utils/supabase.js"
+import { formatDuration, formatViews } from "../utils/services/dataformatting.js"
 
 export default function ServingSize({showModal, setShowModal, imgSource, imgBase64}) {
     //I NEED TO ADD A RETAKE PHOTO BUTTON SOMEHWERE
